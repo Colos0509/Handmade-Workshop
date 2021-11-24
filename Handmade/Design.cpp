@@ -52,7 +52,7 @@ bool Design::OnEnter()
 		return false;
 	}
 
-	/*m_lightShader->BindAttribute("vertexIn");
+	m_lightShader->BindAttribute("vertexIn");
 	m_lightShader->BindAttribute("colorIn");
 	m_lightShader->BindAttribute("textureIn");
 	m_lightShader->BindAttribute("normalIn");
@@ -73,25 +73,25 @@ bool Design::OnEnter()
 	m_lightShader->BindUniform("material.ambient");
 	m_lightShader->BindUniform("material.diffuse");
 	m_lightShader->BindUniform("material.specular");
-	m_lightShader->BindUniform("material.shininess");*/
+	m_lightShader->BindUniform("material.shininess");
 
-	//m_lightShader->BindUniform("light.attenuationLinear");
-	//m_lightShader->BindUniform("light.attenuationConstant");
-	//m_lightShader->BindUniform("light.attenuationQuadratic");
+	/*m_lightShader->BindUniform("light.attenuationLinear");
+	m_lightShader->BindUniform("light.attenuationConstant");
+	m_lightShader->BindUniform("light.attenuationQuadratic");*/
 
 	//TEST CODE to be used later for multiple lights
-	/*for (size_t i = 0; i < TOTAL_LIGHTS; i++)
-	{
-		std::string index = std::to_string(i);
+	//for (size_t i = 0; i < TOTAL_LIGHTS; i++)
+	//{
+	//	std::string index = std::to_string(i);
 
-		m_lightShader->BindUniform("lights[" + index + "].ambient");
-		m_lightShader->BindUniform("lights[" + index + "].diffuse");
-		m_lightShader->BindUniform("lights[" + index + "].specular");
-		m_lightShader->BindUniform("lights[" + index + "].position");
-		m_lightShader->BindUniform("lights[" + index + "].attenuationConstant");
-		m_lightShader->BindUniform("lights[" + index + "].attenuationLinear");
-		m_lightShader->BindUniform("lights[" + index + "].attenuationQuadratic");
-	}*/
+	//	m_lightShader->BindUniform("lights[" + index + "].ambient");
+	//	m_lightShader->BindUniform("lights[" + index + "].diffuse");
+	//	m_lightShader->BindUniform("lights[" + index + "].specular");
+	//	m_lightShader->BindUniform("lights[" + index + "].position");
+	//	m_lightShader->BindUniform("lights[" + index + "].attenuationConstant");
+	//	m_lightShader->BindUniform("lights[" + index + "].attenuationLinear");
+	//	m_lightShader->BindUniform("lights[" + index + "].attenuationQuadratic");
+	//}
 
 	//===================================================================
 
@@ -158,8 +158,8 @@ bool Design::OnEnter()
 	m_light = std::make_unique<Light>(0.0f, 7.5f, 0.0f);
 
 	m_model = std::make_unique<Model>("Teapot", "Teapot.obj", true);
-	//m_model->GetTransform().SetScale(5.0f, 5.0f, 5.0f);
-	//m_model->SetColor(1, 0, 1, 1);
+	m_model->GetTransform().SetScale(5.0f, 5.0f, 5.0f);
+	m_model->SetColor(1, 0, 1, 1);
 
 	//m_quad = std::make_unique<Quad>();
 	//m_cube = std::make_unique<Cuboid>();
@@ -262,12 +262,12 @@ bool Design::Render()
 	m_grid->Render(mainShader);
 
 	//USE LIGHT SHADER WHEN RENDERING 3D OBJECT
-	//lightShader.Use();
-	//lightShader.SendData("cameraPosition", m_sceneCamera->GetTransform().GetPosition());
+	lightShader.Use();
+	lightShader.SendData("cameraPosition", m_sceneCamera->GetTransform().GetPosition());
 
-	//m_light->SendToShader(lightShader);
-	//m_light->Render(lightShader);
-	//m_sceneCamera->SendToShader(lightShader);
+	m_light->SendToShader(lightShader);
+	m_light->Render(lightShader);
+	m_sceneCamera->SendToShader(lightShader);
 
 	//m_axes->GetTransform().SetRotation(m_grid->GetTransform().GetRotation());
 	//m_axes->Render(lightShader);
