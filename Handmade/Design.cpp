@@ -261,6 +261,7 @@ bool Design::Render()
 
 	m_grid->Render(mainShader);
 
+	//USE LIGHT SHADER WHEN RENDERING 3D OBJECT
 	//lightShader.Use();
 	//lightShader.SendData("cameraPosition", m_sceneCamera->GetTransform().GetPosition());
 
@@ -355,9 +356,8 @@ bool Design::Render()
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplSDL2_NewFrame();
 	ImGui::NewFrame();
-
-	//This makes sure the mouse has no effect on sizing/dragging the window
-	ImGui::SetWindowFocus(nullptr);
+	
+	ImGui::SetWindowFocus(nullptr);   //This makes sure the mouse has no effect on sizing/dragging the window
 
 	ImGui::Begin("Output console");
 	
@@ -368,19 +368,40 @@ bool Design::Render()
 	ImGui::SetWindowSize("Output console", windowSize);
 	
 	ImGui::Text("This is where all your debug data will live...");  
-	
+
+	if (Input::Instance()->IsLeftButtonClicked()) //Show left mouse button clicked in output window
+	{
+		ImGui::Text("Left mouse button clicked");
+	}
+
 	ImGui::End();
+
+	//==============================================================================
 
 	ImGui::Begin("Properties");
 
 	windowPos = ImVec2(THREE_QUARTER_WIDTH + 2, 2);
-	windowSize = ImVec2(ONE_QUARTER_WIDTH - 4, resolution.y - 4);
+	windowSize = ImVec2(THREE_QUARTER_WIDTH - 2, resolution.y - 4);
 
 	ImGui::SetWindowPos("Properties", windowPos);
 	ImGui::SetWindowSize("Properties", windowSize);
 	
 	ImGui::End();
 
+	//==============================================================================
+
+	ImGui::Begin("Menu");  //Put in a Menu viewport
+
+	windowPos = ImVec2(0 , 0);
+	windowSize = ImVec2(THREE_QUARTER_WIDTH / 4, resolution.y / 5);
+
+	ImGui::SetWindowPos("Menu", windowPos);
+	ImGui::SetWindowSize("Menu", windowSize);
+
+	ImGui::End();
+
+	//==============================================================================
+	// 
 	//bool showWindow = false;
 	//ImGui::Checkbox("Check me", &showWindow);
 
