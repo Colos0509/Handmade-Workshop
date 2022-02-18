@@ -275,8 +275,8 @@ bool Design::Render()
 	//m_cube->GetTransform().SetRotation(m_grid->GetTransform().GetRotation());
 	//m_cube->Render(lightShader);
 
-	//m_model->GetTransform().SetRotation(m_grid->GetTransform().GetRotation());
-	//m_model->Render(lightShader);
+	m_model->GetTransform().SetRotation(m_grid->GetTransform().GetRotation());
+	m_model->Render(lightShader);
 
 	//==============================================================================
 	//Text rendering & UI
